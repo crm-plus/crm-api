@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.HashSet;
 import java.util.List;
 
 @Validated
@@ -78,5 +77,12 @@ public class UserController {
         User user = new User();
         user.firstName(authentication.getName());
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<User> getUserProfile() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.getUserByEmail(authentication.getName());
+        return ResponseEntity.ok(user);
     }
 }
