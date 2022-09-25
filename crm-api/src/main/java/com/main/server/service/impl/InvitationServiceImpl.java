@@ -8,9 +8,8 @@ import com.main.server.repository.InvitationRepository;
 import com.main.server.repository.OrganizationRepository;
 import com.main.server.repository.UserRepository;
 import com.main.server.service.InvitationService;
+import com.main.server.websocket.WebSocketNotifier;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,17 +17,17 @@ import org.springframework.stereotype.Service;
 public class InvitationServiceImpl extends AbstractService implements InvitationService {
     private final InvitationRepository invitationRepository;
 
-    private final SimpMessagingTemplate simpMessagingTemplate;
+    private final WebSocketNotifier webSocketNotifier;
 
     public InvitationServiceImpl(
             UserRepository userRepository,
             OrganizationRepository organizationRepository,
             InvitationRepository invitationRepository,
-            SimpMessagingTemplate simpMessagingTemplate) {
+            WebSocketNotifier webSocketNotifier) {
 
         super(userRepository, organizationRepository);
         this.invitationRepository = invitationRepository;
-        this.simpMessagingTemplate = simpMessagingTemplate;
+        this.webSocketNotifier = webSocketNotifier;
     }
 
     @Override
@@ -46,12 +45,9 @@ public class InvitationServiceImpl extends AbstractService implements Invitation
         invitation.sender(organization);
         invitation.state(InvitationState.PENDING);
 
-        simpMessagingTemplate.convertAndSendToUser(
-                user.credential().email(),
-                "/notify",
-                invitation
-        );
+        //Invitation savedInvitation = invitationRepository.save(invitation);
 
-        return invitationRepository.save(invitation);
+        webSocketNotifier.notifyOnInvitationUpdate(invitation);
+        return invitation;
     }
 }
