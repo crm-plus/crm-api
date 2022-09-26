@@ -1,5 +1,7 @@
-package com.main.server.model;
+package com.main.server.model.organization;
 
+import com.main.server.model.BaseEntity;
+import com.main.server.model.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

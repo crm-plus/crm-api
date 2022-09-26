@@ -1,4 +1,4 @@
-package com.main.server.model;
+package com.main.server.model.organization;
 
 public enum OrganizationPermissionType {
     DELETE("delete"),

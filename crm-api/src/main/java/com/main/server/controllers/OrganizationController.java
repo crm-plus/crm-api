@@ -1,12 +1,11 @@
 package com.main.server.controllers;
 
-import com.main.server.model.Organization;
+import com.main.server.model.organization.Organization;
 import com.main.server.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +20,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Validated
 @RestController
 @CrossOrigin
 @RequestMapping(path = {"/api/organizations"})
