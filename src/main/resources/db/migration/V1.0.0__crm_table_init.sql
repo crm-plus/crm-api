@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS organizations
 
 CREATE TABLE IF NOT EXISTS organizations_users
 (
-    id               BIGINT GENERATED ALWAYS AS IDENTITY,
+    id              BIGINT GENERATED ALWAYS AS IDENTITY,
     organization_id BIGINT,
     user_id         BIGINT,
 
@@ -125,3 +125,21 @@ CREATE TABLE IF NOT EXISTS organization_roles
         FOREIGN KEY (user_id)
             REFERENCES users (id)
 );
+
+CREATE TABLE IF NOT EXISTS invitation
+(
+    id           BIGINT GENERATED ALWAYS AS IDENTITY,
+    sender_id    BIGINT,
+    recipient_id BIGINT,
+    state        VARCHAR NOT NULL,
+
+    PRIMARY KEY (id),
+
+    CONSTRAINT fk_organization_id
+        FOREIGN KEY (sender_id)
+            REFERENCES organizations (id),
+
+    CONSTRAINT fk_user_id
+        FOREIGN KEY (recipient_id)
+            REFERENCES users (id)
+)

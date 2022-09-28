@@ -19,11 +19,11 @@ import javax.persistence.Table;
 @Table(name = "invitations")
 public class Invitation extends BaseEntity {
     @ManyToOne()
-    @JoinColumn(name = "organization_id")
+    @JoinColumn(name = "sender_id")
     private Organization sender;
 
     @ManyToOne()
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "recipient_id")
     private User recipient;
 
     @Column(name = "state", nullable = false)

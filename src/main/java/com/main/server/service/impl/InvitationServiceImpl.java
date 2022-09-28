@@ -45,9 +45,9 @@ public class InvitationServiceImpl extends AbstractService implements Invitation
         invitation.sender(organization);
         invitation.state(InvitationState.PENDING);
 
-        //Invitation savedInvitation = invitationRepository.save(invitation);
+        Invitation savedInvitation = invitationRepository.save(invitation);
 
-        webSocketNotifier.notifyOnInvitationUpdate(invitation);
-        return invitation;
+        webSocketNotifier.notifyOnInvitationUpdate(savedInvitation);
+        return savedInvitation;
     }
 }
