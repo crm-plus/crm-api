@@ -55,6 +55,7 @@ public class JwtAuthenticationServiceImpl implements AuthenticationService {
         }
 
         jwtTokenProvider.validateToken(refreshToken);
+        refreshTokenRepository.delete(existedRefreshToken);
 
         return generateAuthResponse(existedRefreshToken.credential().email());
     }

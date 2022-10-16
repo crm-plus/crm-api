@@ -4,6 +4,7 @@ import com.main.server.exception.ResourceNotFoundException;
 import com.main.server.model.OrganizationRole;
 import com.main.server.model.OrganizationRoleType;
 import com.main.server.model.User;
+import com.main.server.repository.OrganizationRepository;
 import com.main.server.repository.OrganizationRoleRepository;
 import com.main.server.repository.UserRepository;
 import com.main.server.security.exception.ResourceForbiddenException;
@@ -18,6 +19,7 @@ import java.util.Arrays;
 @Component
 @RequiredArgsConstructor
 public class OrganizationPermissionEvaluator implements PermissionEvaluator {
+    private final OrganizationRepository organizationRepository;
     private final OrganizationRoleRepository organizationRoleRepository;
     private final UserRepository userRepository;
 
@@ -29,6 +31,11 @@ public class OrganizationPermissionEvaluator implements PermissionEvaluator {
         }
 
         if (targetDomainObject instanceof String) {
+            organizationRepository.findByName((String) targetDomainObject)
+                    .orElseThrow(() -> new ResourceNotFoundException(
+                            String.format("Organization by name %s not found", targetDomainObject)
+                    ));
+
             User user = userRepository
                     .getUserByCredentialEmail(auth.getName())
                     .orElseThrow(() -> new ResourceNotFoundException(
@@ -40,7 +47,7 @@ public class OrganizationPermissionEvaluator implements PermissionEvaluator {
                             String.format("For user '%s' and organization '%s' not found any roles", auth.getName(), targetDomainObject)
                     ));
 
-            OrganizationRoleType roleType = organizationRole.getOrganizationRoleType();
+            OrganizationRoleType roleType = organizationRole.organizationRoleType();
             Arrays.stream(roleType.getOrganizationPermissionTypes())
                     .filter((permissionType) -> permissionType.getName().equals(permission))
                     .findFirst()

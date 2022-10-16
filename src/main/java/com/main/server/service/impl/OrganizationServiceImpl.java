@@ -1,16 +1,17 @@
 package com.main.server.service.impl;
 
+import com.main.server.model.InvitationState;
 import com.main.server.model.Organization;
+import com.main.server.model.OrganizationRole;
+import com.main.server.model.OrganizationRoleType;
 import com.main.server.model.User;
 import com.main.server.exception.ResourceAlreadyExistException;
 import com.main.server.exception.ResourceNotFoundException;
 import com.main.server.repository.OrganizationRepository;
+import com.main.server.repository.OrganizationRoleRepository;
+import com.main.server.repository.UserRepository;
 import com.main.server.service.OrganizationService;
-import com.main.server.service.UserService;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -21,12 +22,19 @@ import java.util.Optional;
  * Service for crud manipulations with entity {@link} Organization
  */
 @Service
-@AllArgsConstructor
 @Slf4j
-public class OrganizationServiceImpl implements OrganizationService {
+public class OrganizationServiceImpl extends AbstractService implements OrganizationService {
 
-    private final OrganizationRepository organizationRepository;
-    private final UserService userService;
+    private OrganizationRoleRepository organizationRoleRepository;
+
+    public OrganizationServiceImpl(
+            UserRepository userRepository,
+            OrganizationRepository organizationRepository,
+            OrganizationRoleRepository organizationRoleRepository) {
+
+        super(userRepository, organizationRepository);
+        this.organizationRoleRepository = organizationRoleRepository;
+    }
 
     /**
      * Save organization
@@ -43,11 +51,21 @@ public class OrganizationServiceImpl implements OrganizationService {
             );
         }
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.getUserByEmail(authentication.getName());
+        User user = getAuthenticatedUser();
+
+        // Save organization
         organization.createdBy(user);
         organization.createdAt(new Date());
-        return organizationRepository.save(organization);
+        organization.addMember(user);
+        Organization savedOrganization = organizationRepository.save(organization);
+
+        OrganizationRole organizationRole = new OrganizationRole();
+        organizationRole.organizationRoleType(OrganizationRoleType.ADMIN);
+        organizationRole.organization(savedOrganization);
+        organizationRole.user(user);
+        organizationRoleRepository.save(organizationRole);
+
+        return savedOrganization;
     }
 
     /**
@@ -116,9 +134,20 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
+    public List<User> getAllMembers(Long id, int page, int size) {
+        //TODO add pagination
+        return userRepository.findAllMembersByOrganizationId(id);
+    }
+
+    @Override
+    public List<User> getAllPendingMembers(Long organizationId, Integer page, Integer size) {
+        // TODO add pagination
+        return userRepository.findAllPendingMembers(organizationId, InvitationState.PENDING);
+    }
+
+    @Override
     public List<Organization> getAllOrganizationUserRelated() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.getUserByEmail(authentication.getName());
+        User user = getAuthenticatedUser();
         return organizationRepository.findAllByCreatedBy(user);
     }
 

@@ -28,7 +28,7 @@ public class RefreshToken extends BaseEntity {
     private String refreshToken;
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne()
     @JoinColumn(name = "credential_id", referencedColumnName = "id")
     private Credential credential;
 }

@@ -1,6 +1,7 @@
 package com.main.server.controllers;
 
 import com.main.server.model.Organization;
+import com.main.server.model.User;
 import com.main.server.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -67,5 +69,25 @@ public class OrganizationController {
     public ResponseEntity<List<Organization>> getAllOrganizationUserRelated() {
 
         return ResponseEntity.ok(organizationService.getAllOrganizationUserRelated());
+    }
+
+    @GetMapping(path = "/{organizationId}/members")
+    public ResponseEntity<List<User>> getAllOrganizationMembers(
+            @PathVariable Long organizationId,
+            @RequestParam Integer page,
+            @RequestParam Integer size
+    ) {
+
+        return ResponseEntity.ok(organizationService.getAllMembers(organizationId, page, size));
+    }
+
+    @GetMapping(path = "/{organizationId}/users/pending")
+    public ResponseEntity<List<User>> getAllOrganizationPendingUsers(
+            @PathVariable Long organizationId,
+            @RequestParam Integer page,
+            @RequestParam Integer size
+    ) {
+
+        return ResponseEntity.ok(organizationService.getAllPendingMembers(organizationId, page, size));
     }
 }

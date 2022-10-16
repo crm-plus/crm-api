@@ -38,6 +38,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
     implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-websocket', version: '2.7.4'
 }
 
 tasks.named('test') {
