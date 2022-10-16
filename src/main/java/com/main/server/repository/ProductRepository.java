@@ -1,6 +1,6 @@
 package com.main.server.repository;
 
-import com.main.server.model.product.Product;
+import com.main.server.model.Product;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

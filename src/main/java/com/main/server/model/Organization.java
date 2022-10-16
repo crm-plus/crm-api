@@ -1,4 +1,4 @@
-package com.main.server.model.organization;
+package com.main.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,6 +1,6 @@
 package com.main.server.service;
 
-import com.main.server.model.organization.Organization;
+import com.main.server.model.Organization;
 import com.main.server.exception.ResourceAlreadyExistException;
 import com.main.server.exception.ResourceNotFoundException;
 

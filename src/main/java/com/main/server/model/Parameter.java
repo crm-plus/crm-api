@@ -1,4 +1,4 @@
-package com.main.server.model.product;
+package com.main.server.model;
 
 import com.main.server.model.BaseEntity;
 import lombok.Data;

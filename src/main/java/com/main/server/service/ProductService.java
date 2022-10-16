@@ -1,8 +1,7 @@
 package com.main.server.service;
 
 import com.main.server.exception.ResourceAlreadyExistException;
-import com.main.server.model.organization.Organization;
-import com.main.server.model.product.Product;
+import com.main.server.model.Product;
 import org.springframework.stereotype.Service;
 
 @Service

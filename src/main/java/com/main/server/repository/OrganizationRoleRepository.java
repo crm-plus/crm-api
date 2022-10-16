@@ -1,6 +1,6 @@
 package com.main.server.repository;
 
-import com.main.server.model.organization.OrganizationRole;
+import com.main.server.model.OrganizationRole;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

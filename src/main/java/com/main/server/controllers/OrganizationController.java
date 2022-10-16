@@ -1,6 +1,6 @@
 package com.main.server.controllers;
 
-import com.main.server.model.organization.Organization;
+import com.main.server.model.Organization;
 import com.main.server.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

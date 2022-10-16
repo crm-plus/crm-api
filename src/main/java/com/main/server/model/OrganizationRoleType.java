@@ -1,4 +1,4 @@
-package com.main.server.model.organization;
+package com.main.server.model;
 
 public enum OrganizationRoleType {
     CREATOR(OrganizationPermissionType.DELETE, OrganizationPermissionType.EDIT, OrganizationPermissionType.VIEW),

@@ -1,6 +1,6 @@
 package com.main.server.controllers;
 
-import com.main.server.model.product.Product;
+import com.main.server.model.Product;
 import com.main.server.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

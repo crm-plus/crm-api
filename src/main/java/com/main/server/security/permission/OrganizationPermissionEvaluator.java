@@ -1,8 +1,8 @@
 package com.main.server.security.permission;
 
 import com.main.server.exception.ResourceNotFoundException;
-import com.main.server.model.organization.OrganizationRole;
-import com.main.server.model.organization.OrganizationRoleType;
+import com.main.server.model.OrganizationRole;
+import com.main.server.model.OrganizationRoleType;
 import com.main.server.model.User;
 import com.main.server.repository.OrganizationRoleRepository;
 import com.main.server.repository.UserRepository;

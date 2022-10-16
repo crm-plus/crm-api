@@ -1,9 +1,6 @@
-package com.main.server.model.product;
+package com.main.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.main.server.model.BaseEntity;
-import com.main.server.model.organization.Organization;
-import com.main.server.model.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
