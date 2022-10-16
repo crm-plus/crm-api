@@ -1,12 +1,13 @@
 package com.main.server.model;
 
-import com.main.server.model.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -24,6 +25,10 @@ public class Parameter extends BaseEntity {
     private String units;
 
     @NotBlank
-    @Column(name = "value", nullable = false, unique = true, length = 37)
+    @Column(name = "parameter_value", nullable = false, unique = true, length = 37)
     private String value;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    private Product product;
 }

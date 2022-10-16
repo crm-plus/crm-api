@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -25,22 +26,27 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping("/product")
-    public void saveProduct(@RequestBody Product product, @PathVariable @NotNull Long orgId) {
-        productService.saveProduct(product, orgId);
+    public ResponseEntity<Product> saveProduct(@RequestBody Product product, @PathVariable @NotNull Long orgId) {
+        return ResponseEntity.ok(productService.saveProduct(product, orgId));
     }
 
     @GetMapping("/product/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable @NotNull Long id, @PathVariable @NotNull Long orgId) {
-        return ResponseEntity.ok(productService.getProductById(id, orgId));
+    public ResponseEntity<Product> getProductById(@PathVariable @NotNull Long id) {
+        return ResponseEntity.ok(productService.getProductById(id));
     }
 
     @PutMapping("/product")
-    public ResponseEntity<Product> updateProduct(@RequestBody Product product, @PathVariable @NotNull Long orgId){
+    public ResponseEntity<Product> updateProduct(@RequestBody Product product, @PathVariable @NotNull Long orgId) {
         return ResponseEntity.ok(productService.updateProduct(product, orgId));
     }
 
     @DeleteMapping("/product/{id}")
-    public ResponseEntity<Product> deleteProduct( @PathVariable @NotNull Long id, @PathVariable @NotNull Long orgId){
-        return ResponseEntity.ok(productService.deleteProduct(id, orgId));
+    public ResponseEntity<Product> deleteProduct(@PathVariable @NotNull Long id) {
+        return ResponseEntity.ok(productService.deleteProduct(id));
+    }
+
+    @GetMapping("/products")
+    public ResponseEntity<List<Product>> getAllProducts(@PathVariable @NotNull Long orgId) {
+        return ResponseEntity.ok(productService.getAllProducts(orgId));
     }
 }
