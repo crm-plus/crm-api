@@ -9,14 +9,15 @@ CREATE TABLE IF NOT EXISTS credentials
 
 CREATE TABLE IF NOT EXISTS users
 (
-    id                  BIGINT GENERATED ALWAYS AS IDENTITY,
-    first_name          VARCHAR,
-    last_name           VARCHAR,
-    credential_id       BIGINT,
-    birth_date          DATE,
-    residential_address VARCHAR,
-    deleted             BOOLEAN,
-    sex                 VARCHAR,
+    id                   BIGINT GENERATED ALWAYS AS IDENTITY,
+    first_name           VARCHAR,
+    last_name            VARCHAR,
+    credential_id        BIGINT,
+    birth_date           DATE,
+    residential_address  VARCHAR,
+    deleted              BOOLEAN,
+    sex                  VARCHAR,
+    organization_role_id BIGINT,
 
     PRIMARY KEY (id),
 
@@ -126,20 +127,31 @@ CREATE TABLE IF NOT EXISTS organization_roles
             REFERENCES users (id)
 );
 
-CREATE TABLE IF NOT EXISTS invitation
+CREATE TABLE IF NOT EXISTS invitations
 (
     id           BIGINT GENERATED ALWAYS AS IDENTITY,
     sender_id    BIGINT,
+    organization_id BIGINT,
     recipient_id BIGINT,
     state        VARCHAR NOT NULL,
+    created_at   VARCHAR,
 
     PRIMARY KEY (id),
 
     CONSTRAINT fk_organization_id
-        FOREIGN KEY (sender_id)
+        FOREIGN KEY (organization_id)
             REFERENCES organizations (id),
 
-    CONSTRAINT fk_user_id
+    CONSTRAINT fk_recipient_id
         FOREIGN KEY (recipient_id)
+            REFERENCES users (id),
+
+    CONSTRAINT fk_sender_id
+        FOREIGN KEY (sender_id)
             REFERENCES users (id)
-)
+);
+
+ALTER TABLE users
+    ADD CONSTRAINT fk_org_role_id
+        FOREIGN KEY (organization_role_id)
+            REFERENCES organization_roles (id);

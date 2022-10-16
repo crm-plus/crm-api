@@ -1,18 +1,23 @@
 package com.main.server.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+
+@Getter
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum OrganizationRoleType {
-    CREATOR(OrganizationPermissionType.DELETE, OrganizationPermissionType.EDIT, OrganizationPermissionType.VIEW),
-    ADMIN(OrganizationPermissionType.EDIT, OrganizationPermissionType.VIEW),
-    SPECTATOR(OrganizationPermissionType.VIEW);
+    CREATOR("Creator", OrganizationPermissionType.DELETE, OrganizationPermissionType.EDIT, OrganizationPermissionType.VIEW),
+    ADMIN("Admin", OrganizationPermissionType.EDIT, OrganizationPermissionType.VIEW),
+    SPECTATOR("Spectator", OrganizationPermissionType.VIEW);
 
-
+    @JsonProperty("name")
+    private final String text;
+    @JsonProperty("organizationPermissionTypes")
     private final OrganizationPermissionType[] organizationPermissionTypes;
 
-    OrganizationRoleType(OrganizationPermissionType... organizationPermissionTypes) {
+    OrganizationRoleType(String text, OrganizationPermissionType... organizationPermissionTypes) {
+        this.text = text;
         this.organizationPermissionTypes = organizationPermissionTypes;
-    }
-
-    public OrganizationPermissionType[] getOrganizationPermissionTypes() {
-        return organizationPermissionTypes;
     }
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,8 +37,8 @@ public class Organization extends BaseEntity {
     @Column(name = "description")
     private String description;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonProperty("createdBy")
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "created_by")
     private User createdBy;
 
@@ -59,16 +61,18 @@ public class Organization extends BaseEntity {
     private Boolean isPrivate;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinTable(
-            name = "orgranizations_users",
+            name = "organizations_users",
             joinColumns = {@JoinColumn(name = "organization_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
     private List<User> members;
 
-    @JsonProperty("createdBy")
-    public Long createdBy() {
-        return createdBy.getId();
+    public void addMember(User user) {
+        if(members == null) {
+            members = new ArrayList<>();
+        }
+        members.add(user);
     }
 }
