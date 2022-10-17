@@ -90,6 +90,7 @@ public class InvitationServiceImpl extends AbstractService implements Invitation
         organizationRole.user(newMember);
         organizationRole.organizationRoleType(OrganizationRoleType.SPECTATOR);
         organizationRoleRepository.save(organizationRole);
+        newMember.organizationRoles().add(organizationRole);
 
         invitation.organization().members().add(newMember);
         //TODO add notification that user accept invitation

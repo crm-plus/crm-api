@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.messaging.simp.stomp.StompCommand;
@@ -55,6 +56,9 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
                 StompHeaderAccessor accessor =
                         MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 
+                if(accessor == null) {
+                    return message;
+                }
                 if (StompCommand.CONNECT.equals(accessor.getCommand())) {
 
                     List<String> headers = accessor.getNativeHeader("Authorization");
@@ -75,12 +79,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
                         SecurityContextHolder.clearContext();
                         String error = "JWT token is expired or invalid";
                         log.info(error);
-                        Map<String, Object> errorHeaders = new HashMap<>();
-                        errorHeaders.put("Error", error);
-                        MessageHeaders messageHeaders = new MessageHeaders(errorHeaders);
-                        Message<?> errorMessage = MessageBuilder.createMessage("payload", messageHeaders);
-                        channel.send(errorMessage);
-                        return null;
+                        throw new JwtAuthenticationException(error);
                     }
                 }
                 return message;
