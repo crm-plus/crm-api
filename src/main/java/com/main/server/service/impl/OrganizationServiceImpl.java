@@ -60,7 +60,7 @@ public class OrganizationServiceImpl extends AbstractService implements Organiza
         Organization savedOrganization = organizationRepository.save(organization);
 
         OrganizationRole organizationRole = new OrganizationRole();
-        organizationRole.organizationRoleType(OrganizationRoleType.ADMIN);
+        organizationRole.organizationRoleType(OrganizationRoleType.CREATOR);
         organizationRole.organization(savedOrganization);
         organizationRole.user(user);
         organizationRoleRepository.save(organizationRole);
