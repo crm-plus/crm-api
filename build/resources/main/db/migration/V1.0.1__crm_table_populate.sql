@@ -1,2 +1,0 @@
-INSERT INTO crm.roles(name)
-VALUES ('USER') ON CONFLICT DO NOTHING ;

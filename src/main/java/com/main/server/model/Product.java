@@ -25,7 +25,7 @@ import java.util.Set;
 public class Product extends BaseEntity {
 
     @NotBlank
-    @Column(name = "name", nullable = false, unique = true, length = 37)
+    @Column(name = "name", nullable = false, length = 37)
     private String name;
 
     @Column(name = "description")
@@ -75,7 +75,6 @@ public class Product extends BaseEntity {
     private User deletedBy;
 
     @JsonIgnore
-    @OneToMany
-    @JoinColumn(name = "custom_parameter_id", referencedColumnName = "id")
+    @OneToMany(mappedBy = "product")
     private List<Parameter> customParameters;
 }

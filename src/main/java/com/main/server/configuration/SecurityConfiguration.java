@@ -32,7 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/users/register").permitAll()
                 .antMatchers("/api/stomp").permitAll()
                 .antMatchers("/api/stomp/*").permitAll()
-                .antMatchers("/api/users/info").hasAuthority("USER")
+                .antMatchers("/api/*").hasAuthority("USER")
                 .anyRequest()
                 .authenticated()
                 .and()
