@@ -109,6 +109,7 @@ public class OrganizationServiceImpl extends AbstractService implements Organiza
     public Organization update(Long id, Organization organization) throws ResourceNotFoundException, ResourceAlreadyExistException {
         Organization existedOrganization = getOrganization(id);
 
+        //Check if rename of organization won`t throw an exception
         Organization existedOrganizationWithSameName = organizationRepository.findByName(organization.name()).orElse(null);
         if (existedOrganizationWithSameName != null) {
             throw new ResourceAlreadyExistException(
@@ -127,7 +128,7 @@ public class OrganizationServiceImpl extends AbstractService implements Organiza
      * Find organization by name that is not private and not deleted
      */
     @Override
-    public List<Organization> findByName(String name)  {
+    public List<Organization> findByName(String name) {
         return organizationRepository
                 .findAllByNameLikeAndDeletedByNullAndIsPrivateFalse(name);
     }

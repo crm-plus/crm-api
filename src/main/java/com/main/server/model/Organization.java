@@ -2,6 +2,8 @@ package com.main.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.main.server.model.BaseEntity;
+import com.main.server.model.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -30,7 +32,7 @@ public class Organization extends BaseEntity {
 
     @NotBlank
     @JsonProperty("name")
-    @Column(name = "name", unique = true, nullable = false, length = 16)
+    @Column(name = "name", unique = true, nullable = false, length = 37)
     private String name;
 
     @JsonProperty("description")

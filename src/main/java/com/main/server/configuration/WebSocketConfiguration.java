@@ -4,7 +4,6 @@ import com.main.server.security.JwtTokenProvider;
 import com.main.server.security.exception.JwtAuthenticationException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
@@ -85,6 +84,5 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
                 return message;
             }
         });
-
     }
 }
