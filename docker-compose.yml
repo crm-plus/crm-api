@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.3"
 services:
   db:
     image: postgres
@@ -11,18 +11,15 @@ services:
       POSTGRES_PASSWORD: 1234
     volumes:
       - local_pgdata:/var/lib/postgresql/data
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin4_container
-    restart: always
+  crm-api:
+    container_name: crm-api
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: crm-api:latest
     ports:
-      - "5050:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: dhalchenko@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: 1234
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
+      - 8080:8080
 
 volumes:
   local_pgdata:
-  pgadmin-data:
+    driver: local
