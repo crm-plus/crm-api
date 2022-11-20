@@ -2,7 +2,7 @@ package com.main.server.repository;
 
 import com.main.server.model.Invitation;
 import com.main.server.model.InvitationState;
-import com.main.server.model.Organization;
+import com.main.server.model.organization.Organization;
 import com.main.server.model.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;

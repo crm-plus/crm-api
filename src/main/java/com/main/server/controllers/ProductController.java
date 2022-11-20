@@ -4,6 +4,7 @@ import com.main.server.model.Product;
 import com.main.server.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,22 +26,26 @@ public class ProductController {
 
     private ProductService productService;
 
-    @PostMapping("/product")
+    @PreAuthorize("hasPermission(#product.organization().name(), 'edit')")
+    @PostMapping("/products")
     public ResponseEntity<Product> saveProduct(@RequestBody Product product, @PathVariable @NotNull Long orgId) {
         return ResponseEntity.ok(productService.saveProduct(product, orgId));
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/products/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable @NotNull Long id) {
         return ResponseEntity.ok(productService.getProductById(id));
     }
 
-    @PutMapping("/product")
-    public ResponseEntity<Product> updateProduct(@RequestBody Product product, @PathVariable @NotNull Long orgId) {
-        return ResponseEntity.ok(productService.updateProduct(product, orgId));
+    @PreAuthorize("hasPermission(#product.organization().name(), 'edit')")
+    @PutMapping("/products/{id}")
+    public ResponseEntity<Product> updateProduct(@RequestBody Product product,
+                                                 @PathVariable @NotNull Long orgId,
+                                                 @PathVariable @NotNull Long id) {
+        return ResponseEntity.ok(productService.updateProduct(product, orgId, id));
     }
 
-    @DeleteMapping("/product/{id}")
+    @DeleteMapping("/products/{id}")
     public ResponseEntity<Product> deleteProduct(@PathVariable @NotNull Long id) {
         return ResponseEntity.ok(productService.deleteProduct(id));
     }
