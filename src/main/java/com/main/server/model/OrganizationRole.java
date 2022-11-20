@@ -1,6 +1,7 @@
 package com.main.server.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.main.server.model.organization.Organization;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -11,7 +12,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 @Entity(name = "organization_roles")
 @Data

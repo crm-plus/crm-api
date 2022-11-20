@@ -1,7 +1,7 @@
 package com.main.server.service.impl;
 
 import com.main.server.exception.ResourceNotFoundException;
-import com.main.server.model.Organization;
+import com.main.server.model.organization.Organization;
 import com.main.server.model.User;
 import com.main.server.repository.OrganizationRepository;
 import com.main.server.repository.UserRepository;
@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Slf4j

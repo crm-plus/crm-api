@@ -1,6 +1,6 @@
 package com.main.server.repository;
 
-import com.main.server.model.Organization;
+import com.main.server.model.organization.Organization;
 import com.main.server.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

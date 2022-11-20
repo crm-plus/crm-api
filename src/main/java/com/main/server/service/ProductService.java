@@ -13,7 +13,7 @@ public interface ProductService {
 
     Product getProductById(Long id);
 
-    Product updateProduct(Product product, Long orgId);
+    Product updateProduct(Product product, Long orgId, Long id);
 
     Product deleteProduct(Long id);
 

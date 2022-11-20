@@ -3,7 +3,7 @@ package com.main.server.service.impl;
 import com.main.server.exception.ResourceNotFoundException;
 import com.main.server.model.Invitation;
 import com.main.server.model.InvitationState;
-import com.main.server.model.Organization;
+import com.main.server.model.organization.Organization;
 import com.main.server.model.OrganizationRole;
 import com.main.server.model.OrganizationRoleType;
 import com.main.server.model.User;
