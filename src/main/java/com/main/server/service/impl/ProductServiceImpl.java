@@ -3,7 +3,7 @@ package com.main.server.service.impl;
 import com.main.server.exception.ResourceAlreadyExistException;
 import com.main.server.exception.ResourceNotFoundException;
 import com.main.server.model.User;
-import com.main.server.model.Organization;
+import com.main.server.model.organization.Organization;
 import com.main.server.model.Product;
 import com.main.server.repository.OrganizationRepository;
 import com.main.server.repository.ProductRepository;
@@ -43,20 +43,17 @@ public class ProductServiceImpl extends AbstractService implements ProductServic
     @Override
     public Product getProductById(Long id) {
         log.info("Enter getProductById() productId: {}", id);
-        return productRepository.getById(id).orElseThrow(
-                () -> new ResourceNotFoundException(
-                        String.format("Product with such id {%d} is not exist", id))
-        );
+        return getProduct(id);
     }
 
     @Override
-    public Product updateProduct(Product product, Long orgId) {
+    public Product updateProduct(Product product, Long orgId, Long id) {
         log.info("Enter updateProduct() productName: {}", product.name());
-        Product exitedProduct = getProduct(product.getId());
+        Product exitedProduct = getProduct(id);
 
         Product exitedProductWithSameName = productRepository.findByNameAndOrganizationId(product.name(), orgId)
                 .orElse(null);
-        if (exitedProductWithSameName != null) {
+        if (exitedProduct.equals(exitedProductWithSameName) && !isDeleted(product)) {
             throw new ResourceAlreadyExistException(
                     String.format("Product with name %s already exist in this organization", product.name()));
         }
@@ -65,7 +62,8 @@ public class ProductServiceImpl extends AbstractService implements ProductServic
         exitedProduct.description(product.description());
         exitedProduct.price(product.price());
         exitedProduct.primeCost(product.primeCost());
-        //todo add tags and custom attributes
+        exitedProduct.tags(product.tags());
+        exitedProduct.customParameters(product.customParameters());
         return productRepository.save(exitedProduct);
     }
 
@@ -94,9 +92,13 @@ public class ProductServiceImpl extends AbstractService implements ProductServic
     }
 
     private Product getProduct(Long id) {
-        return productRepository.getById(id).orElseThrow(
+        return productRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException(
                         String.format("Product with such id {%d} is not exist", id))
         );
+    }
+
+    private boolean isDeleted(Product product) {
+        return product.deletedBy() != null;
     }
 }

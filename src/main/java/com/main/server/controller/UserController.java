@@ -1,4 +1,4 @@
-package com.main.server.controllers;
+package com.main.server.controller;
 
 import com.main.server.exception.ResourceAlreadyExistException;
 import com.main.server.exception.ResourceNotFoundException;

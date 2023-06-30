@@ -8,12 +8,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
 @Data
 @Accessors(fluent = true)
 @EqualsAndHashCode(callSuper = false)
+@Table(name = "custom_parameters")
 public class Parameter extends BaseEntity {
 
     @NotBlank

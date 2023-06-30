@@ -11,6 +11,5 @@ import java.util.Optional;
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
     Optional<Product> findByNameAndOrganizationId(String name, Long id);
-    Optional<Product> getById(Long id);
     List<Product> findAllByOrganizationIdAndDeletedByNull(Long orgId);
 }

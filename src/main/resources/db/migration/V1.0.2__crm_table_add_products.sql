@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS categories
+CREATE TABLE IF NOT EXISTS category
 (
     id BIGINT GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(37) UNIQUE NOT NULL,
@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS products
     category_id BIGINT,
     available_quantity BIGINT NOT NULL,
     created_by BIGINT NOT NULL,
+    deleted_by BIGINT,
 
     PRIMARY KEY(id),
 
@@ -43,7 +44,7 @@ CREATE TABLE IF NOT EXISTS products
 
     CONSTRAINT fk_category_id
         FOREIGN KEY (category_id)
-            REFERENCES categories (id),
+            REFERENCES category (id),
 
     CONSTRAINT fk_created_by
         FOREIGN KEY (created_by)
@@ -67,7 +68,7 @@ CREATE TABLE IF NOT EXISTS products_tags
 (
     id BIGINT GENERATED ALWAYS AS IDENTITY,
     product_id BIGINT,
-    tag_id BIGINT,
+    product_tag_id BIGINT,
 
     PRIMARY KEY (id),
 
@@ -75,7 +76,7 @@ CREATE TABLE IF NOT EXISTS products_tags
         FOREIGN KEY (product_id)
             REFERENCES products (id),
 
-    CONSTRAINT fk_tag_id
-        FOREIGN KEY (tag_id)
+    CONSTRAINT fk_product_tag_id
+        FOREIGN KEY (product_tag_id)
             REFERENCES tags (id)
 );

@@ -1,26 +1,8 @@
 package com.main.server.service;
 
 import com.example.mainserver.AbstractSpringBootTests;
-import com.example.mainserver.util.TestException;
-import com.main.server.controllers.UserController;
-import com.main.server.model.Role;
-import com.main.server.model.User;
-import com.main.server.exception.ResourceAlreadyExistException;
-import com.main.server.exception.ResourceNotFoundException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.Spy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 class UserServiceImplTest extends AbstractSpringBootTests {
