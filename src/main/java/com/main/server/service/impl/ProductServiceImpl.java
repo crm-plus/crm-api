@@ -43,10 +43,7 @@ public class ProductServiceImpl extends AbstractService implements ProductServic
     @Override
     public Product getProductById(Long id) {
         log.info("Enter getProductById() productId: {}", id);
-        return productRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException(
-                        String.format("Product with such id {%d} is not exist", id))
-        );
+        return getProduct(id);
     }
 
     @Override
