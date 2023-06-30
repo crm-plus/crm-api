@@ -1,4 +1,4 @@
-package com.main.server.controllers;
+package com.main.server.controller;
 
 import com.main.server.model.organization.Organization;
 import com.main.server.model.User;
